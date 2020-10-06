@@ -107,16 +107,19 @@ if(options.enableWebInterface) {
 		//Read CSV to show history
 		var stream = fs.createReadStream(options.loggerFileName);
 		var pings = [], downloads = [], uploads = [];
-		var csvStream = csv()
-		  .on("data", function(data){
-			pings.push([(new Date(data[0])).getTime(), parseFloat(data[2])]);
-			downloads.push([(new Date(data[0])).getTime(), parseFloat(data[3])]);
-			uploads.push([(new Date(data[0])).getTime(), parseFloat(data[4])]);
-		});
-		stream.pipe(csvStream);
+                 var csvStream = csv.parse()
+111                   .on("data", function(data){
+112                         pings.push([(new Date(data[0])).getTime(), parseFloat(data[2])]);
+113                         downloads.push([(new Date(data[0])).getTime(), parseFloat(data[3])]);
+114                         uploads.push([(new Date(data[0])).getTime(), parseFloat(data[4])]);
+115
+116                    });
+117
+118                 stream.pipe(csvStream);
+119
+120
+121                 //Make series for Highcharts
 
-
-		//Make series for Highcharts
 		var series = [
 		{
 			name:'Pings',
